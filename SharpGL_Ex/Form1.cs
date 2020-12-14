@@ -14,16 +14,22 @@ namespace SharpGL_Ex
     // using this type to know what user is currently drawing
     enum FormMode
     {
-        Normal,
+        None,
         DrawLine,
         DrawCircle,
         DrawRectangle,
+        DrawEllipse,
+        DrawEqTriangle,
+        DrawEqPentagon,
+        DrawEqHexagon,
     }
 
     public partial class FormMain : Form
     {
         #region Utils stuff
-        FormMode formMode = FormMode.Normal;
+        List<Shape> shapes = new List<Shape>();
+
+        FormMode formMode = FormMode.None;
 
         Point mouseDownPosition = new Point(-1,-1);
         Point mouseUpPosition = new Point(-1,-1);
@@ -51,6 +57,7 @@ namespace SharpGL_Ex
         #region Init stuff
         private void CustomInit()
         {
+            comboBox_Shapes.SelectedIndex = 0;
             ChosenColor = Color.LightPink;
         }
 
@@ -94,7 +101,7 @@ namespace SharpGL_Ex
             // Clear the color and depth buffer.
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
 
-            gl.Color(ChosenColor.R, ChosenColor.G, ChosenColor.B);
+
 
             // Vẽ vời chỗ này. Ví dụ:
             //gl.Begin(OpenGL.GL_TRIANGLES); // Chọn chế độ vẽ tam giác
@@ -105,22 +112,9 @@ namespace SharpGL_Ex
             //gl.Flush(); // Thực hiện lệnh vẽ ngay lập tức thay vì đợi sau 1 khoảng thời gian
 
             // CuteTN note: add new shapes cases here
-            switch(formMode)
+            foreach(var shape in shapes)
             {
-                case FormMode.DrawLine:
-                    DrawLine(gl);
-                    break;
-
-                case FormMode.DrawCircle:
-                    DrawCircle(gl);
-                    break;
-
-                case FormMode.DrawRectangle:
-                    DrawRectangle(gl);
-                    break;
-
-                default:
-                    break;
+                shape.Draw(gl);
             }
 
             gl.Flush();
@@ -139,16 +133,6 @@ namespace SharpGL_Ex
             {
                 ChosenColor = dlg.Color;
             }
-        }
-
-        private void button_Line_Click(object sender, EventArgs e)
-        {
-            formMode = FormMode.DrawLine;
-        }
-
-        private void button_Circle_Click(object sender, EventArgs e)
-        {
-            formMode = FormMode.DrawCircle;
         }
         #endregion
 
@@ -170,6 +154,12 @@ namespace SharpGL_Ex
         {
             flagMouseIsDown = false;
 
+            switch(formMode)
+            {
+                case FormMode.DrawLine:
+                    shapes.Add(new Line(mouseDownPosition, mouseUpPosition, ChosenColor));
+                    break;
+            }
             // CuteTN note: add Shape to shape collection here
         }
         #endregion
@@ -177,21 +167,58 @@ namespace SharpGL_Ex
         #region Shapes drawing stuff
         // CuteTN note: we gonna need some better OOP stuff and polymorphism pla pla here :)
         // CuteTN note: add drawing logic to the functions below
+        #endregion
 
-        void DrawLine(OpenGL gl)
+        #region Mode changing stuff
+        private void comboBox_Shapes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            gl.Begin(OpenGL.GL_LINES);
-            gl.Vertex(mouseDownPosition.X, gl.RenderContextProvider.Height - mouseDownPosition.Y);
-            gl.Vertex(mouseUpPosition.X, gl.RenderContextProvider.Height - mouseUpPosition.Y);
-            gl.End();
-        }
+            // Dirty code here
 
-        void DrawCircle(OpenGL gl)
-        {
-        }
+            /*
+                None
+                Line
+                Circle
+                Rectangle
+                Ellipse
+                Equilateral triangle
+                Equilateral pentagon
+                Equilateral hexagon
+             */
 
-        void DrawRectangle(OpenGL gl)
-        {
+            switch (comboBox_Shapes.SelectedItem as string)
+            {
+                case "None":
+                    formMode = FormMode.None;
+                    break;
+
+                case "Line":
+                    formMode = FormMode.DrawLine;
+                    break;
+
+                case "Circle":
+                    formMode = FormMode.DrawCircle;
+                    break;
+
+                case "Rectangle":
+                    formMode = FormMode.DrawRectangle;
+                    break;
+
+                case "Ellipse":
+                    formMode = FormMode.DrawEllipse;
+                    break;
+
+                case "Equilateral triangle":
+                    formMode = FormMode.DrawEqTriangle;
+                    break;
+
+                case "Equilateral pentagon":
+                    formMode = FormMode.DrawEqPentagon;
+                    break;
+
+                case "Equilateral hexagon":
+                    formMode = FormMode.DrawEqHexagon;
+                    break;
+            }
         }
         #endregion
     }
