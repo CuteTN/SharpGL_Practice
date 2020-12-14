@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpGL_Ex", "SharpGL_Ex\SharpGL_Ex.csproj", "{D234581B-2F39-48A3-98FE-A8E532B03DD3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D234581B-2F39-48A3-98FE-A8E532B03DD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D234581B-2F39-48A3-98FE-A8E532B03DD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D234581B-2F39-48A3-98FE-A8E532B03DD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D234581B-2F39-48A3-98FE-A8E532B03DD3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {44A6EC6D-7712-43E2-9311-2D66A33DE6CA}
+	EndGlobalSection
+EndGlobal
